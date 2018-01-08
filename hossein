@@ -1,0 +1,36 @@
+#!/bin/bash
+
+HOSSEIN_COLOR=`tput setaf 5`
+RESET=`tput sgr0`
+ECHO_STRING="${HOSSEIN_COLOR}__hossein__:${RESET}"
+ITERATION_NUM=0
+
+if [ $# -eq 0 ]; then
+    echo "Usage: hossein <command>"
+    exit 1
+fi
+
+echo ${ECHO_STRING} Task iteration: $((++ITERATION_NUM)): $(date)
+
+START_TIME=$SECONDS
+$@
+while [ $? -ne 0 ]; do
+    sleep 1
+    echo -e "\n${ECHO_STRING} Task iteration: $((++ITERATION_NUM)): $(date)"
+    $@
+done
+END_TIME=$SECONDS
+
+DURATION=$((END_TIME - START_TIME))
+if [ $ITERATION_NUM = 1 ]; then
+    ITERATION_STR="1 iteration"
+else
+    ITERATION_STR="${ITERATION_NUM} iterations"
+fi
+if [ $DURATION -eq 1 ]; then
+    DURATION_STR="1 second"
+else
+    DURATION_STR="${DURATION} seconds"
+fi
+
+echo -e "\n${ECHO_STRING} Succeed in ${ITERATION_STR} and ${DURATION_STR}."
