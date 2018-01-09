@@ -1,0 +1,7 @@
+[user]
+	name = Foad Nosrati Habibi
+	email = foad.nh@gmail.com
+[core]
+	editor = nvim
+[push]
+	default = simple
