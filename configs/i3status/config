@@ -1,0 +1,158 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+	output_format = "i3bar"
+	colors = true
+	interval = 5
+}
+
+order += "volume_status"
+order += "frame display"
+#order += "backlight"
+#order += "dpms"
+order += "keyboard_layout"
+order += "disk /home/"
+order += "frame net_status"
+#order += "net_rate"
+#order += "online_status"
+order += "spotify"
+order += "wifi"
+order += "ethernet enp0s25"
+order += "battery_level"
+order += "load"
+order += "tztime local"
+#order += "volume Master"
+# order += "netdata"
+#order += "run_watch VPN"
+#order += "vpn_status"
+#order += "wireless wlp4s0"
+#order += "battery 0"
+#order += "sysdata"
+
+volume Master {
+	device = "pulse"
+}
+
+volume_status {
+	cache_timeout = 2
+	button_up = 4
+	button_down = 5
+	button_mute = 2
+	format_muted = "♪: "
+}
+
+frame display {
+	format_separator = " "
+
+	backlight {
+	}
+
+	dpms {
+		format_on = ""
+		format_off = ""
+		color_off = "#FFFFFF"
+	}
+}
+
+keyboard_layout {
+	color_gb = "#729FCF"
+	color_ir = "#FCE94F"
+}
+
+frame net_status {
+	format_separator = " "
+
+	online_status {
+		cache_timeout = 3
+		url = "8.8.8.8"
+		format_offline = ""
+		format_online = ""
+	}
+
+	group {
+		button_next = 1
+		button_prev = 3
+
+		net_rate {
+			format = "{down} {up}"
+		}
+
+		net_rate {
+			# format = "{total}"
+			format = "{total}"
+		}
+	}
+}
+
+wifi {
+	use_sudo = True
+	device = "wlp4s0"
+	format_up = ": {ip} {signal_percent} {ssid}"
+	format_down = ": "
+}
+
+wireless wlp4s0 {
+	format_up = "W: (%quality at %essid) %ip"
+	format_down = "W: down"
+}
+
+ethernet enp0s25 {
+	# if you use %speed, i3status requires root privileges
+	format_up = ": %ip" # (%speed)"
+	format_down = "" #": down"
+}
+
+battery_level {
+	blocks = ""
+	charging_character = "⚡"
+	notification = True
+	notify_low_level = True
+	hide_seconds = True
+	format = "{icon} {percent}% {time_remaining}"
+	color_good = "#00FF00"
+	color_degraded = "#FFFF00"
+	color_bad = "#FF0000"
+	# threshold_full = 95
+}
+
+battery 0 {
+	format = "%status %percentage %remaining"
+	last_full_capacity = true
+	# hide_seconds = true
+	integer_battery_capacity = true
+}
+
+net_rate {
+	# ↓ {:5.1f}↑
+}
+
+spotify {
+	format_down = ""
+}
+
+run_watch DHCP {
+	pidfile = "/var/run/dhclient*.pid"
+}
+
+run_watch VPN {
+	pidfile = "/var/run/vpnc/pid"
+	# format_down = ""
+}
+
+tztime local {
+	format = "%Y-%m-%d %H:%M:%S"
+}
+
+load {
+	format = "%1min"
+}
+
+disk "/home/" {
+	format = "%free"
+}
